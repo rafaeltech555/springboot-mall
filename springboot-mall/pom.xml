@@ -67,7 +67,7 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>org.junit</groupId>
+                    <groupId>org.junit </groupId>
                     <artifactId>junit-bom</artifactId>
                 </exclusion>
             </exclusions>

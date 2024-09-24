@@ -52,6 +52,6 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         productService.deleteProduct(productId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(productId));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(productService.getProductById(productId));
     }
 }

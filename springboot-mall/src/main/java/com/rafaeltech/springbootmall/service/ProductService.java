@@ -1,5 +1,6 @@
 package com.rafaeltech.springbootmall.service;
 
+import com.rafaeltech.springbootmall.constant.ProductCategory;
 import com.rafaeltech.springbootmall.dto.ProductRequest;
 import com.rafaeltech.springbootmall.model.Product;
 import jakarta.validation.Valid;
@@ -7,6 +8,9 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 public interface ProductService {
+
+    List<Product> getProducts(ProductCategory category, String search);
+
     Product getProductById(int productId);
 
     Integer createProduct(@Valid ProductRequest productRequest);
@@ -15,5 +19,4 @@ public interface ProductService {
 
     void deleteProduct(int productId);
 
-    List<Product> getProducts();
 }

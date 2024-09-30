@@ -2,11 +2,11 @@ package com.rafaeltech.springbootmall.dao.impl;
 
 import com.rafaeltech.springbootmall.constant.ProductCategory;
 import com.rafaeltech.springbootmall.dao.ProductDao;
+import com.rafaeltech.springbootmall.dto.ProductQueryParams;
 import com.rafaeltech.springbootmall.dto.ProductRequest;
 import com.rafaeltech.springbootmall.model.Product;
 import com.rafaeltech.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -25,10 +25,12 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQueryParams params) {
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product WHERE 1 = 1";
 
         Map<String, Object> map = new HashMap<>();
+        ProductCategory category = params.getCategory();
+        String search = params.getSearch();
 
         if (category != null) {
             sql += " AND category = :category";

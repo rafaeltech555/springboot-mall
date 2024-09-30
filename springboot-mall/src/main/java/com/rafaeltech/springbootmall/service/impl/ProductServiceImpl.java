@@ -1,7 +1,7 @@
 package com.rafaeltech.springbootmall.service.impl;
 
-import com.rafaeltech.springbootmall.constant.ProductCategory;
 import com.rafaeltech.springbootmall.dao.ProductDao;
+import com.rafaeltech.springbootmall.dto.ProductQueryParams;
 import com.rafaeltech.springbootmall.dto.ProductRequest;
 import com.rafaeltech.springbootmall.model.Product;
 import com.rafaeltech.springbootmall.service.ProductService;
@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams params) {
+        return productDao.getProducts(params);
     }
 
     @Override

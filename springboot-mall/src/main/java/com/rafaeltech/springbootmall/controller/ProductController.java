@@ -5,6 +5,7 @@ import com.rafaeltech.springbootmall.dto.ProductQueryParams;
 import com.rafaeltech.springbootmall.dto.ProductRequest;
 import com.rafaeltech.springbootmall.model.Product;
 import com.rafaeltech.springbootmall.service.ProductService;
+import com.rafaeltech.springbootmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "created_date") String orderBy,
@@ -42,7 +43,13 @@ public class ProductController {
 
         List<Product> productList = productService.getProducts(params);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(productService.countProduct(params));
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")

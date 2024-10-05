@@ -120,4 +120,25 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "DELETE FROM product WHERE product_id = :productId";
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("productId", productId));
     }
+
+    @Override
+    public Integer countProduct(ProductQueryParams params) {
+        String sql = "SELECT count(*) FROM product WHERE 1 = 1";
+
+        Map<String, Object> map = new HashMap<>();
+        ProductCategory category = params.getCategory();
+        String search = params.getSearch();
+
+        if (category != null) {
+            sql += " AND category = :category";
+            map.put("category", category.name());
+        }
+
+        if (search != null) {
+            sql += " AND product_name LIKE :search";
+            map.put("search", "%" + search + "%");
+        }
+
+        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+    }
 }
